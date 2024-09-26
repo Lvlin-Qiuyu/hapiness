@@ -43,21 +43,26 @@ export default function App() {
     ]);
 
     // 具体退休时间
-    const realRetireYear = birthYearNum + retireAge + Math.floor((birthMonthNum + retireDelayMonths) / 12);
-    const realRetireMonth = (birthMonthNum + retireDelayMonths) % 12;
+    const realRetireYear = birthYearNum + retireAge + Math.floor((birthMonthNum + retireDelayMonths - 1) / 12);
+    let realRetireMonth = (birthMonthNum + retireDelayMonths) % 12;
+    if (realRetireMonth === 0) realRetireMonth = 12;
 
     // 具体年龄
     const realAge = realRetireMonth >= birthMonthNum ? realRetireYear - birthYearNum : realRetireYear - birthYearNum - 1;
-    const realAgeMonth = realRetireMonth >= birthMonthNum ? realRetireMonth - birthMonthNum : realRetireMonth + 12 - birthMonthNum;
+
+    console.log({
+        realRetireMonth,
+        birthMonthNum
+    })
 
     return (
-        <div className='bg-gray-100 min-h-screen max-h-full flex flex-col'>
-            <div className='max-w-[800px] m-10 p-2 border border-black rounded-lg bg-white'>
+        <div className='min-w-[450px] bg-gray-100 min-h-screen max-h-full flex flex-wrap'>
+            <div className='min-w-[400px] w-[800px] m-10 p-2 border border-black rounded-lg bg-white'>
                 <p className='text-center'>退休计算器</p>
 
-                <div className='max-w-[800px] m-5 p-2 border border-blue-500 rounded-lg bg-blue-50'>
-                    <p className="m-2">出生日期</p>
-                    <div>
+                <div className='m-5 p-5 border border-blue-500 rounded-lg bg-blue-50'>
+                    <p className="mb-2">出生日期</p>
+                    <div className="flex flex-wrap-n">
                         <Select
                             label="出生年份"
                             variant="bordered"
@@ -87,8 +92,8 @@ export default function App() {
                     </div>
                 </div>
 
-                <div className='max-w-[800px] m-5 p-2 border border-yellow-500 rounded-lg bg-yellow-50'>
-                    <p>性别</p>
+                <div className='m-5 p-5 border border-yellow-500 rounded-lg bg-yellow-50'>
+                    <p className="mb-2">性别</p>
                     <RadioGroup
                         orientation="horizontal"
                         value={sex}
@@ -101,8 +106,8 @@ export default function App() {
 
                 {
                     sex === 'female' && (
-                        <div className='max-w-[800px] m-5 p-2 border border-red-500 rounded-lg bg-red-50'>
-                            <p className="m-2">原法定退休年龄</p>
+                        <div className='m-5 p-5 border border-red-500 rounded-lg bg-red-50'>
+                            <p className="mb-2">原法定退休年龄</p>
                             <RadioGroup
                                 orientation="horizontal"
                                 value={femaleRetireAge}
@@ -115,12 +120,12 @@ export default function App() {
                     )
                 }
 
-                <div className='max-w-[800px] m-5 p-2 border border-green-500 rounded-lg bg-green-50'>
-                    <p className="m-2">计算结果</p>
-                    <div>
-                        <p>改革后退休时间： {`${realRetireYear} 年 ${realRetireMonth} 月`}</p>
-                        <p>法定延迟退休年龄: {realAge} 岁 {realAgeMonth ? `${realAgeMonth} 个月` : ''}</p>
-                        <p>延迟月份: {retireDelayMonths} 个月</p>
+                <div className='m-5 p-5 border border-green-500 rounded-lg bg-green-50'>
+                    <p className="mb-2">计算结果</p>
+                    <div className="grid grid-cols-2 gap-y-2">
+                        <span>改革后退休时间</span><span>{`${realRetireYear} 年 ${realRetireMonth} 月`}</span> 
+                        <span>法定延迟退休年龄</span><span>{realAge} 岁</span>
+                        <span>延迟月份</span><span>{retireDelayMonths} 个月</span>
                     </div>
                 </div>
             </div>
