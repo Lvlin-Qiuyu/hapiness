@@ -120,14 +120,18 @@ export default function App() {
                     )
                 }
 
-                <div className='m-5 p-5 border border-green-500 rounded-lg bg-green-50'>
-                    <p className="mb-2">计算结果</p>
-                    <div className="grid grid-cols-2 gap-y-2">
-                        <span>改革后退休时间</span><span>{`${realRetireYear} 年 ${realRetireMonth} 月`}</span> 
-                        <span>法定延迟退休年龄</span><span>{realAge} 岁</span>
-                        <span>延迟月份</span><span>{retireDelayMonths} 个月</span>
-                    </div>
-                </div>
+                {
+                    birthYearNum && birthMonthNum ? (
+                        <div className='m-5 p-5 border border-green-500 rounded-lg bg-green-50'>
+                            <p className="mb-2">计算结果</p>
+                            <div className="grid grid-cols-2 gap-y-2">
+                                <span>改革后退休时间</span><span>{`${realRetireYear} 年 ${realRetireMonth} 月`}</span> 
+                                <span>法定延迟退休年龄</span><span>{realAge} 岁</span>
+                                <span>延迟月份</span><span>{retireDelayMonths} 个月</span>
+                            </div>
+                        </div>
+                    ) : null
+                }
             </div>
         </div>
     );
